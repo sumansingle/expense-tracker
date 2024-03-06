@@ -33,6 +33,7 @@ const Create = () => {
       setExpenseName("");
       setExpensePrice("");
       setSelectedDate("");
+      window.location.reload(false);
     }
   };
 
@@ -60,9 +61,11 @@ const Create = () => {
 
         <Calender onDateChange={handleDateChange} />
       </Box>
-      <Button onClick={handleAddExpense} variant="contained" color="primary">
-        Add Expense
-      </Button>
+      <Box marginTop="7px">
+        <Button onClick={handleAddExpense} variant="contained" color="primary">
+          Add Expense
+        </Button>
+      </Box>
     </Container>
   );
 };

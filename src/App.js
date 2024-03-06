@@ -34,15 +34,23 @@ function MyApp() {
 }
 
 const App = () => {
-  const [mode, setMode] = React.useState("light"); // Fix the initialization of state
+  const [mode, setMode] = React.useState(() => {
+    const savedMode = localStorage.getItem("theme");
+    return savedMode ? savedMode : "light";
+  });
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
-    [] // Remove the empty dependency array since setMode is a dependency
+    []
   );
+
+  React.useEffect(() => {
+    localStorage.setItem("theme", mode);
+  }, [mode]);
 
   const theme = React.useMemo(
     () =>
