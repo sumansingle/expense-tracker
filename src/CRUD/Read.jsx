@@ -20,6 +20,7 @@ const Read = () => {
   const [editIndex, setEditIndex] = useState(null);
   const [editName, setEditName] = useState("");
   const [editPrice, setEditPrice] = useState("");
+  const [editDate, setEditDate] = useState("");
 
   useEffect(() => {
     const storedExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
@@ -41,6 +42,7 @@ const Read = () => {
     setEditIndex(index);
     setEditName(expenses[index].name);
     setEditPrice(expenses[index].price);
+    setEditDate(expenses[index].date);
   };
 
   const handleSaveEdit = () => {
@@ -49,6 +51,7 @@ const Read = () => {
       updatedExpenses[editIndex] = {
         name: editName,
         price: parseFloat(editPrice),
+        date: editDate,
       };
       localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
       setExpenses(updatedExpenses);
@@ -69,9 +72,9 @@ const Read = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Expense Name</TableCell>
-                <TableCell>Expense Price</TableCell>
-                {/* <TableCell>Expense Date</TableCell> */}
-                {/* <TableCell>Action</TableCell> */}
+                <TableCell> Expense Price</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
           </TableRow>
@@ -81,17 +84,17 @@ const Read = () => {
                 {expenses.map((expense, index) => (
                   <TableRow key={index}>
                     {console.log(expense.date)}
-                    <TableCell border="1px solid red">
+                    <TableCell textAlign="right">
                       {editIndex === index ? (
                         <TextField
                           value={editName}
                           onChange={(e) => setEditName(e.target.value)}
                         />
                       ) : (
-                        expense.name
+                        expense.name + "      "
                       )}
                     </TableCell>
-                    <TableCell border="1px solid red">
+                    <TableCell textAlign="right">
                       {editIndex === index ? (
                         <TextField
                           type="number"
@@ -102,8 +105,17 @@ const Read = () => {
                         expense.price
                       )}
                     </TableCell>
-                    <TableCell border="1px solid red">
-                      {expense.date} {/* Display the date */}
+                    <TableCell textAlign="right">
+                      {editIndex === index ? (
+                        <TextField
+                          type="string"
+                          value={editDate}
+                          onChange={(e) => setEditDate(e.target.value)}
+                        />
+                      ) : (
+                        expense.date
+                      )}
+                      {/* Display the date */}
                     </TableCell>
                     <TableCell>
                       {editIndex === index ? (
